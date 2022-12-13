@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import Superhero
 
 
-class SuperheroSerializer(serializers.Serializer):
+class SuperheroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Superhero
         fields = '__all__'
