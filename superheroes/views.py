@@ -1,5 +1,8 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from .models import Superhero
@@ -8,6 +11,8 @@ from .serializers import SuperheroSerializer
 
 # Create your views here.
 @api_view(['GET', 'POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAdminUser])
 def superheroes_list(request):
     if request.method == 'GET':
         superheroes = Superhero.objects.all()
@@ -23,6 +28,8 @@ def superheroes_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAdminUser])
 def superhero_detail(request, id):
     try:
         superhero = Superhero.objects.get(id=id)
